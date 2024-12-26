@@ -1,0 +1,19 @@
+server:
+  port: 8081
+spring:
+  rabbitmq:
+    host: 127.0.0.1
+    port: 5672
+    username: guest
+    password: guest
+    virtual-host: /
+    # 发送端确认类型
+    publisher-confirm-type: correlated
+    # 开启发送端抵达队列的确认
+    publisher-returns: true
+    # 只要抵达队列,已异步发送优先回调我们的returnConfirm
+    template:
+      mandatory: true
+    listener:
+      direct:
+        acknowledge-mode: manual # 开启手动确认信息，@RabbitListener注解实现的消费逻辑默认 ackMode 是 auto，这里配置了也不行
